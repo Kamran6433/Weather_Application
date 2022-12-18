@@ -2,15 +2,22 @@ const getRefreshButton = document.getElementById('get-refresh-button');
 
 const getOrRefreshWeatherData = () => {
 
-    fetch('https://api.open-meteo.com/v1/forecast?latitude=54.97&longitude=-1.61&hourly=temperature_2m')
+    var latitude = '54.97';
+    var longitude = '12.61';
+    var parameters = 'hourly=temperature_2m';
+    var url = 'https://api.open-meteo.com/v1/forecast?latitude='+latitude+'&longitude='+longitude+'&'+parameters;
+
+    fetch(url)
         .then(response => {
             if (!response.ok) {
                 return Promise.reject(response.statusText);
             }
             return response.json();
         })
-        .then(ok_response => {
-            console.log(ok_response);
+        .then(good_response => {
+            str = JSON.stringify(good_response, null, 4);
+            console.log(str);
+            document.getElementById('output').innerHTML = str;
         })
         .catch(error => {
             getRefreshButton.parentElement.innerHTML = `Error: ${error}`;
