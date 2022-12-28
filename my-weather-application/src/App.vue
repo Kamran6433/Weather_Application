@@ -3,16 +3,19 @@
       <img alt="Vue logo" src="./assets/logo.png">
       <h1>My Weather Application?</h1>
         <WeatherApplication></WeatherApplication>
+        <HttpRequest></HttpRequest>
     </div>
 </template>
 
 <script>
 import WeatherApplication from './components/WeatherApplication.vue';
+import HttpRequest from './components/HttpRequest.vue';
 
 export default {
     name: 'App',
     components: {
-      WeatherApplication
+      WeatherApplication,
+      HttpRequest
     }
 }
 
