@@ -44,7 +44,7 @@
                     .then(good_response => {
                         var str = JSON.stringify(good_response, null, 4);
                         console.log(str);
-                        document.getElementById('output').innerHTML = str;
+                        document.getElementById('data').innerHTML = str;
                     })
                     .catch(error => {
                         document.getElementById('data').innerHTML = `Please enter correct co-ordinates`;
@@ -62,5 +62,10 @@
     border: 5px solid #2c3e50;
     background-color: #42b983;
     color: white;
+}
+#submitButton:hover {
+    transition-duration: 200ms;
+    border: 5px solid #42b983;
+    background-color: #2c3e50;
 }
 </style>
