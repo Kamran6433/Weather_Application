@@ -1,5 +1,11 @@
 <template>
     <div>
+        <label>Latitude: </label>
+        <input v-model="latitude" placeholder="e.g. 54.77">
+        <label>Longitude: </label>
+        <input v-model="longitude" placeholder="e.g. -1.27">
+        <!-- <label></label>
+        <input> -->
         <button id="get-refresh-button" @click="getOrRefreshWeatherData">GET OR REFRESH WEATHER DATA</button>
         <p id="output"></p>
     </div>
@@ -8,13 +14,21 @@
 <script>
     export default {
         name: 'HttpRequest',
+        data() {
+            return {
+                data: {
+                    latitude: '',
+                    longitude: ''
+                }
+            }
+        },
         methods: {
             getOrRefreshWeatherData() {
 
                 const getRefreshButton = document.getElementById('get-refresh-button');
 
-                var latitude = '54.97';
-                var longitude = '12.61';
+                var latitude = this.latitude;
+                var longitude = this.longitude;
                 var parameters = 'hourly=temperature_2m';
                 var url = 'https://api.open-meteo.com/v1/forecast?latitude='+latitude+'&longitude='+longitude+'&'+parameters;
 
