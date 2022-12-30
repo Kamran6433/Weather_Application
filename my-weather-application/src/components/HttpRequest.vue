@@ -1,13 +1,17 @@
 <template>
     <div>
         <label>Latitude: </label>
-        <input v-model="latitude" placeholder="e.g. 54.77">
+        <input v-model="latitude" placeholder="e.g. 54.77"><br/><br/>
         <label>Longitude: </label>
-        <input v-model="longitude" placeholder="e.g. -1.27">
+        <input v-model="longitude" placeholder="e.g. -1.27"><br/><br/>
         <!-- <label></label>
         <input> -->
-        <button id="get-refresh-button" @click="getOrRefreshWeatherData">GET OR REFRESH WEATHER DATA</button>
-        <p id="output"></p>
+        <button id="submitButton" @click="getOrRefreshWeatherData"><h2>SUBMIT</h2></button>
+        <div>
+            <h3>Weather data will be displayed here</h3>
+            <hr/>
+            <p id="data"></p>
+        </div>
     </div>
 </template>
 
@@ -24,8 +28,6 @@
         },
         methods: {
             getOrRefreshWeatherData() {
-
-                const getRefreshButton = document.getElementById('get-refresh-button');
 
                 var latitude = this.latitude;
                 var longitude = this.longitude;
@@ -45,15 +47,20 @@
                         document.getElementById('output').innerHTML = str;
                     })
                     .catch(error => {
-                        getRefreshButton.parentElement.innerHTML = `Error: ${error}`;
+                        document.getElementById('data').innerHTML = `Please enter correct co-ordinates`;
                         console.error('There was an error!', error);
                     });
 
             }
         }
-    }
+    };
 </script>
 
 <style scoped>
-
+#submitButton {
+    border-radius: 20px;
+    border: 5px solid #2c3e50;
+    background-color: #42b983;
+    color: white;
+}
 </style>

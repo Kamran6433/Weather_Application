@@ -1,7 +1,7 @@
 <template>
     <div id="app">
-      <img alt="Vue logo" src="./assets/logo.png">
-      <h1>My Weather Application?</h1>
+        <img alt="Cloud" src="./assets/cloud-png-transparent-11 (1).png" width="750">
+        <h1>My Weather Application</h1>
         <WeatherApplication></WeatherApplication>
         <HttpRequest></HttpRequest>
     </div>

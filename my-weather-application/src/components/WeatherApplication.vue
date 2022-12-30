@@ -1,7 +1,8 @@
 <template>
     <div>
         <p>
-            Hello My Name Is Kamran. This is my Weather Application.
+            Hello My Name Is Kamran.<br/>
+            This is my Weather Application where users can display the weather in a specified location.
         </p>
     </div>
 </template>
