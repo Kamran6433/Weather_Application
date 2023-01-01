@@ -48,7 +48,12 @@
                         var text = localStorage.getItem("./assets/WeatherData.JSON");
                         var str = JSON.parse(text);
                         console.log(str);
-                        document.getElementById('data').innerHTML = str['hourly_units'];
+                        // let objectData = "";
+                        // for (const x in str) {
+                        //     objectData += str[x] + ", ";
+                        // }
+                        var temperature_2m = str['hourly']
+                        document.getElementById('data').innerHTML = temperature_2m['temperature_2m'];
                         // document.getElementById('data').innerHTML = JSONDataStore;
                     })
                     .catch(error => {
