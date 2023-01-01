@@ -42,9 +42,14 @@
                         return response.json();
                     })
                     .then(good_response => {
-                        var str = JSON.stringify(good_response, null, 4);
+                        var JSONDataStore = JSON.stringify(good_response, null, 4);
+                        localStorage.setItem("./assets/WeatherData.JSON", JSONDataStore);
+
+                        var text = localStorage.getItem("./assets/WeatherData.JSON");
+                        var str = JSON.parse(text);
                         console.log(str);
-                        document.getElementById('data').innerHTML = str;
+                        document.getElementById('data').innerHTML = str['hourly_units'];
+                        // document.getElementById('data').innerHTML = JSONDataStore;
                     })
                     .catch(error => {
                         document.getElementById('data').innerHTML = `Please enter correct co-ordinates`;
