@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>
+        <div class="box">
             <label>Latitude: </label>
             <input v-model="latitude" placeholder="e.g. 54.77"><br/><br/>
             <label>Longitude: </label>
@@ -8,7 +8,7 @@
             <button id="submitButton" @click="getSpecificWeatherData"><h2>SUBMIT</h2></button>
         </div>
         <br/><br/>
-        <div>
+        <div class="box">
             <label>Capital City: </label>
             <input v-model="city" placeholder="e.g. Copenhagen"><br/><br/>
             <label>Continent: </label>
@@ -158,5 +158,12 @@ button:hover {
 #currentLocation:hover {
     background-color: #2c3e50;
     border-color: crimson;
+}
+.box {
+    border: 2px solid #2c3e50;
+    padding: 20px;
+    display: inline-block;
+    width: 40%;
+    background-color: lightgrey;
 }
 </style>
