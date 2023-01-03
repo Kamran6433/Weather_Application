@@ -1,14 +1,20 @@
 <template>
     <div>
-        <label>Latitude: </label>
-        <input v-model="latitude" placeholder="e.g. 54.77"><br/><br/>
-        <label>Longitude: </label>
-        <input v-model="longitude" placeholder="e.g. -1.27"><br/><br/>
-        <label>City: </label>
-        <input v-model="city" placeholder="e.g. Newcastle"><br/><br/>
-        <label>Continent: </label>
-        <input v-model="continent" placeholder="e.g. Europe"><br/><br/>
-        <button id="submitButton" @click="getOrRefreshWeatherData"><h2>SUBMIT</h2></button>
+        <div>
+            <label>Latitude: </label>
+            <input v-model="latitude" placeholder="e.g. 54.77"><br/><br/>
+            <label>Longitude: </label>
+            <input v-model="longitude" placeholder="e.g. -1.27"><br/><br/>
+            <button id="submitButton" @click="getSpecificWeatherData"><h2>SUBMIT</h2></button>
+        </div>
+        <br/><br/>
+        <div>
+            <label>Capital City: </label>
+            <input v-model="city" placeholder="e.g. Copenhagen"><br/><br/>
+            <label>Continent: </label>
+            <input v-model="continent" placeholder="e.g. Europe"><br/><br/>
+            <button id="submitButton" @click="getCityWeatherData"><h2>SUBMIT</h2></button>
+        </div>
         <br/><br/>
         <button id="currentLocation" @click="getCurrentLocationWeatherData"><h2>Use Current Location</h2></button>
         <div>
@@ -40,13 +46,11 @@
         },
         methods: {
 
-            getOrRefreshWeatherData() {
+            getCityWeatherData() {
 
-                var latitude = this.latitude;
-                var longitude = this.longitude;
-                var parameters = 'hourly=temperature_2m';
-                var url1 = 'https://timezoneapi.io/api/timezone/?Europe/Paris&token=AVfZgODCXKwY';
-                var url = 'https://api.open-meteo.com/v1/forecast?latitude='+latitude+'&longitude='+longitude+'&'+parameters;
+                var continent = this.continent;
+                var city = this.city;
+                var url1 = 'https://timezoneapi.io/api/timezone/?'+continent+'/'+city+'&token=AVfZgODCXKwY';
 
                 fetch(url1)
                     .then(response => {
@@ -61,16 +65,24 @@
 
                         var text = localStorage.getItem("./assets/LocationData.JSON");
                         var str = JSON.parse(text);
-                        console.log(str.data.addresses);
-                        document.getElementById('api').innerHTML = str.data.addresses;
+                        console.log(str);
+                        document.getElementById('api').innerHTML = str;
                     })
                     .catch(error => {
                         document.getElementById('api').innerHTML = `API call Failed.`;
                         console.error('There was an error in first API call!', error);
                     });
 
+            },
 
-                fetch(url)
+            getSpecificWeatherData() {
+
+                var latitude = this.latitude;
+                var longitude = this.longitude;
+                var parameters = 'hourly=temperature_2m';
+                var url2 = 'https://api.open-meteo.com/v1/forecast?latitude='+latitude+'&longitude='+longitude+'&'+parameters;
+
+                fetch(url2)
                     .then(response => {
                         if (!response.ok) {
                             return Promise.reject(response.statusText);
@@ -106,12 +118,13 @@
                     })
                     .then(good_response => {
                         var JSONDataStore = JSON.stringify(good_response, null, 4);
-                        localStorage.setItem("./assets/WeatherData.JSON", JSONDataStore);
+                        localStorage.setItem("./assets/CurrentLocation.JSON", JSONDataStore);
 
-                        var text = localStorage.getItem("./assets/WeatherData.JSON");
+                        var text = localStorage.getItem("./assets/CurrentLocation.JSON");
                         var str = JSON.parse(text);
                         var location = str.data.location
                         var array = location.split(",", 2)
+
                         this.latitude = array[0];
                         this.longitude = array[1];
                         this.getOrRefreshWeatherData()
@@ -120,6 +133,7 @@
                         document.getElementById('data').innerHTML = `Current Location hasn't worked`;
                         console.error('There was an error!', error);
                     });
+
             }
 
         }
