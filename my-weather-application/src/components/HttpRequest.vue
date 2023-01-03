@@ -4,9 +4,9 @@
         <input v-model="latitude" placeholder="e.g. 54.77"><br/><br/>
         <label>Longitude: </label>
         <input v-model="longitude" placeholder="e.g. -1.27"><br/><br/>
-        <!-- <label></label>
-        <input> -->
         <button id="submitButton" @click="getOrRefreshWeatherData"><h2>SUBMIT</h2></button>
+        <br/>
+        <button id="currentLocation" @click="getCurrentLocationWeatherData"><h2>Use Current Location</h2></button>
         <div>
             <h3>Weather data will be displayed here</h3>
             <hr/>
@@ -33,12 +33,13 @@
             }
         },
         methods: {
+
             getOrRefreshWeatherData() {
 
                 var latitude = this.latitude;
                 var longitude = this.longitude;
                 var parameters = 'hourly=temperature_2m';
-                var url1 = 'https://timezoneapi.io/api/address/?Hacker+Way+1+Menlo+Park+California&token=BOqSQMWnZEml';
+                var url1 = 'https://timezoneapi.io/api/address/?Hacker+Way+1+Menlo+Park+California&token=EXCADoQKMxSd';
                 var url2 = 'https://api.open-meteo.com/v1/forecast?latitude='+latitude+'&longitude='+longitude+'&'+parameters;
 
                 fetch(url1)
@@ -86,7 +87,36 @@
                         console.error('There was an error!', error);
                     });
 
+            },
+
+            getCurrentLocationWeatherData() {
+
+                fetch('https://timezoneapi.io/api/ip/?token=EXCADoQKMxSd')
+                    .then(response => {
+                        if (!response.ok) {
+                            return Promise.reject(response.statusText);
+                        }
+                        return response.json();
+                    })
+                    .then(good_response => {
+                        var JSONDataStore = JSON.stringify(good_response, null, 4);
+                        localStorage.setItem("./assets/WeatherData.JSON", JSONDataStore);
+
+                        var text = localStorage.getItem("./assets/WeatherData.JSON");
+                        var str = JSON.parse(text);
+                        var location = str.data.location
+                        var array = location.split(",", 2)
+                        console.log(array[1]);
+                        this.latitude = array[0];
+                        this.longitude = array[1];
+                        this.getOrRefreshWeatherData()
+                    })
+                    .catch(error => {
+                        document.getElementById('data').innerHTML = `Current Location hasn't worked`;
+                        console.error('There was an error!', error);
+                    });
             }
+
         }
     };
 </script>
