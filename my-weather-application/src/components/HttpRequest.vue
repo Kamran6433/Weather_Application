@@ -4,8 +4,12 @@
         <input v-model="latitude" placeholder="e.g. 54.77"><br/><br/>
         <label>Longitude: </label>
         <input v-model="longitude" placeholder="e.g. -1.27"><br/><br/>
+        <label>City: </label>
+        <input v-model="city" placeholder="e.g. Newcastle"><br/><br/>
+        <label>Continent: </label>
+        <input v-model="continent" placeholder="e.g. Europe"><br/><br/>
         <button id="submitButton" @click="getOrRefreshWeatherData"><h2>SUBMIT</h2></button>
-        <br/>
+        <br/><br/>
         <button id="currentLocation" @click="getCurrentLocationWeatherData"><h2>Use Current Location</h2></button>
         <div>
             <h3>Weather data will be displayed here</h3>
@@ -28,7 +32,9 @@
             return {
                 data: {
                     latitude: '',
-                    longitude: ''
+                    longitude: '',
+                    city: '',
+                    continent: ''
                 }
             }
         },
@@ -39,8 +45,8 @@
                 var latitude = this.latitude;
                 var longitude = this.longitude;
                 var parameters = 'hourly=temperature_2m';
-                var url1 = 'https://timezoneapi.io/api/address/?Hacker+Way+1+Menlo+Park+California&token=EXCADoQKMxSd';
-                var url2 = 'https://api.open-meteo.com/v1/forecast?latitude='+latitude+'&longitude='+longitude+'&'+parameters;
+                var url1 = 'https://timezoneapi.io/api/timezone/?Europe/Paris&token=AVfZgODCXKwY';
+                var url = 'https://api.open-meteo.com/v1/forecast?latitude='+latitude+'&longitude='+longitude+'&'+parameters;
 
                 fetch(url1)
                     .then(response => {
@@ -55,8 +61,8 @@
 
                         var text = localStorage.getItem("./assets/LocationData.JSON");
                         var str = JSON.parse(text);
-                        console.log(str);
-                        document.getElementById('api').innerHTML = str
+                        console.log(str.data.addresses);
+                        document.getElementById('api').innerHTML = str.data.addresses;
                     })
                     .catch(error => {
                         document.getElementById('api').innerHTML = `API call Failed.`;
@@ -64,7 +70,7 @@
                     });
 
 
-                fetch(url2)
+                fetch(url)
                     .then(response => {
                         if (!response.ok) {
                             return Promise.reject(response.statusText);
@@ -91,7 +97,7 @@
 
             getCurrentLocationWeatherData() {
 
-                fetch('https://timezoneapi.io/api/ip/?token=EXCADoQKMxSd')
+                fetch('https://timezoneapi.io/api/ip/?token=AVfZgODCXKwY')
                     .then(response => {
                         if (!response.ok) {
                             return Promise.reject(response.statusText);
@@ -106,7 +112,6 @@
                         var str = JSON.parse(text);
                         var location = str.data.location
                         var array = location.split(",", 2)
-                        console.log(array[1]);
                         this.latitude = array[0];
                         this.longitude = array[1];
                         this.getOrRefreshWeatherData()
@@ -122,15 +127,22 @@
 </script>
 
 <style scoped>
-#submitButton {
+button {
     border-radius: 20px;
     border: 5px solid #2c3e50;
     background-color: #42b983;
     color: white;
 }
-#submitButton:hover {
+button:hover {
     transition-duration: 200ms;
     border: 5px solid #42b983;
     background-color: #2c3e50;
+}
+#currentLocation {
+    background-color: crimson;
+}
+#currentLocation:hover {
+    background-color: #2c3e50;
+    border-color: crimson;
 }
 </style>
