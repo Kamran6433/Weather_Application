@@ -20,7 +20,6 @@
         <div>
             <h3>Weather data will be displayed here</h3>
             <hr/>
-            <h1>First API call</h1>
             <p id="api"></p>
             <p id="data"></p>
             <h1>Location</h1>
@@ -50,7 +49,7 @@
 
                 var continent = this.continent;
                 var city = this.city;
-                var url1 = 'https://timezoneapi.io/api/timezone/?'+continent+'/'+city+'&token=AVfZgODCXKwY';
+                var url1 = 'https://timezoneapi.io/api/timezone/?'+continent+'/'+city+'&token=vLexqJzwWbyM';
 
                 fetch(url1)
                     .then(response => {
@@ -98,7 +97,6 @@
                         console.log(str);
                         var temperature_2m = str['hourly'];
                         document.getElementById('temperature-data').innerHTML = temperature_2m['temperature_2m'];
-                        document.getElementById('location-data').innerHTML = temperature_2m['temperature_2m'];
                     })
                     .catch(error => {
                         document.getElementById('data').innerHTML = `Please enter correct co-ordinates`;
@@ -109,7 +107,7 @@
 
             getCurrentLocationWeatherData() {
 
-                fetch('https://timezoneapi.io/api/ip/?token=AVfZgODCXKwY')
+                fetch('https://timezoneapi.io/api/ip/?token=vLexqJzwWbyM')
                     .then(response => {
                         if (!response.ok) {
                             return Promise.reject(response.statusText);
@@ -123,11 +121,15 @@
                         var text = localStorage.getItem("./assets/CurrentLocation.JSON");
                         var str = JSON.parse(text);
                         var location = str.data.location
+                        var city = str.data.city;
+
+                        console.log(city);
                         var array = location.split(",", 2)
 
                         this.latitude = array[0];
                         this.longitude = array[1];
-                        this.getOrRefreshWeatherData()
+                        document.getElementById('location-data').innerHTML = city;
+                        this.getSpecificWeatherData()
                     })
                     .catch(error => {
                         document.getElementById('data').innerHTML = `Current Location hasn't worked`;
@@ -160,10 +162,11 @@ button:hover {
     border-color: crimson;
 }
 .box {
-    border: 2px solid #2c3e50;
+    /* border: 5px solid #2c3e50; */
     padding: 20px;
     display: inline-block;
     width: 40%;
-    background-color: lightgrey;
+    background-color: #FAF9F6;
+    border-radius: 10px;
 }
 </style>
