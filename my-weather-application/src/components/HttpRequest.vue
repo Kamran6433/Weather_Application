@@ -64,8 +64,17 @@
 
                         var text = localStorage.getItem("./assets/LocationData.JSON");
                         var str = JSON.parse(text);
-                        console.log(str);
-                        document.getElementById('api').innerHTML = str;
+                        var location = str.data.timezone.location
+                        var city = str.data.timezone.capital;
+
+                        // console.log(str);
+                        // console.log(typeof(location));
+                        var array = location.split(",", 2)
+
+                        this.latitude = array[0];
+                        this.longitude = array[1];
+                        document.getElementById('location-data').innerHTML = city;
+                        this.getSpecificWeatherData()
                     })
                     .catch(error => {
                         document.getElementById('api').innerHTML = `API call Failed.`;
