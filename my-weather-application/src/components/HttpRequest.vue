@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div id="map"></div>
         <div class="box">
             <label>Latitude: </label>
             <input v-model="latitude" placeholder="e.g. 54.77"><br/><br/>
@@ -49,7 +50,7 @@
 
                 var continent = this.continent;
                 var city = this.city;
-                var url1 = 'https://timezoneapi.io/api/timezone/?'+continent+'/'+city+'&token=vLexqJzwWbyM';
+                var url1 = 'https://timezoneapi.io/api/timezone/?'+continent+'/'+city+'&token=arqTUMsJazDTSojCLmOt';
 
                 fetch(url1)
                     .then(response => {
@@ -64,21 +65,19 @@
 
                         var text = localStorage.getItem("./assets/LocationData.JSON");
                         var str = JSON.parse(text);
-                        var location = str.data.timezone.location
+                        var location = str.data.timezone.location;
                         var city = str.data.timezone.capital;
 
-                        // console.log(str);
-                        // console.log(typeof(location));
-                        var array = location.split(",", 2)
+                        var array = location.split(",", 2);
 
                         this.latitude = array[0];
                         this.longitude = array[1];
                         document.getElementById('location-data').innerHTML = city;
-                        this.getSpecificWeatherData()
+                        this.getSpecificWeatherData();
                     })
                     .catch(error => {
                         document.getElementById('api').innerHTML = `API call Failed.`;
-                        console.error('There was an error in first API call!', error);
+                        console.error('There was an error in the API call!', error);
                     });
 
             },
@@ -116,11 +115,19 @@
 
             getCurrentLocationWeatherData() {
 
-                fetch('https://timezoneapi.io/api/ip/?token=vLexqJzwWbyM')
+                var url3 = 'https://timezoneapi.io/api/ip/?token=arqTUMsJazDTSojCLmOt';
+
+                fetch(url3, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
                     .then(response => {
                         if (!response.ok) {
                             return Promise.reject(response.statusText);
                         }
+                        console.log(response);
+                        // console.log(response.json());
                         return response.json();
                     })
                     .then(good_response => {
@@ -129,16 +136,16 @@
 
                         var text = localStorage.getItem("./assets/CurrentLocation.JSON");
                         var str = JSON.parse(text);
-                        var location = str.data.location
+                        var location = str.data.location;
                         var city = str.data.city;
 
                         console.log(city);
-                        var array = location.split(",", 2)
+                        var array = location.split(",", 2);
 
                         this.latitude = array[0];
                         this.longitude = array[1];
                         document.getElementById('location-data').innerHTML = city;
-                        this.getSpecificWeatherData()
+                        this.getSpecificWeatherData();
                     })
                     .catch(error => {
                         document.getElementById('data').innerHTML = `Current Location hasn't worked`;
