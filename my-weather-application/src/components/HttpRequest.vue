@@ -60,20 +60,21 @@
                         return response.json();
                     })
                     .then(good_response => {
-                        var JSONDataStore = JSON.stringify(good_response, null, 4);
-                        localStorage.setItem("./assets/LocationData.JSON", JSONDataStore);
+                        // var JSONDataStore = JSON.stringify(good_response, null, 4);
+                        // localStorage.setItem("./assets/LocationData.JSON", JSONDataStore);
 
-                        var text = localStorage.getItem("./assets/LocationData.JSON");
-                        var str = JSON.parse(text);
-                        var location = str.data.timezone.location;
-                        var city = str.data.timezone.capital;
+                        // var text = localStorage.getItem("./assets/LocationData.JSON");
+                        // var str = JSON.parse(text);
+                        // var location = str.data.timezone.location;
+                        // var city = str.data.timezone.capital;
 
-                        var array = location.split(",", 2);
+                        // var array = location.split(",", 2);
 
-                        this.latitude = array[0];
-                        this.longitude = array[1];
-                        document.getElementById('location-data').innerHTML = city;
-                        this.getSpecificWeatherData();
+                        // this.latitude = array[0];
+                        // this.longitude = array[1];
+                        // document.getElementById('location-data').innerHTML = city;
+                        // this.getSpecificWeatherData();
+                        console.log(good_response);
                     })
                     .catch(error => {
                         document.getElementById('api').innerHTML = `API call Failed.`;
@@ -97,13 +98,14 @@
                         return response.json();
                     })
                     .then(good_response => {
-                        var JSONDataStore = JSON.stringify(good_response, null, 4);
-                        localStorage.setItem("./assets/WeatherData.JSON", JSONDataStore);
+                        // var JSONDataStore = JSON.stringify(good_response, null, 4);
+                        // localStorage.setItem("./assets/WeatherData.JSON", JSONDataStore);
 
-                        var text = localStorage.getItem("./assets/WeatherData.JSON");
-                        var str = JSON.parse(text);
-                        console.log(str);
-                        var temperature_2m = str['hourly'];
+                        // var text = localStorage.getItem("./assets/WeatherData.JSON");
+                        // var str = JSON.parse(text);
+                        // console.log(str);
+                        console.log(good_response);
+                        var temperature_2m = good_response['hourly'];
                         document.getElementById('temperature-data').innerHTML = temperature_2m['temperature_2m'];
                     })
                     .catch(error => {
@@ -127,28 +129,27 @@
                             return Promise.reject(response.statusText);
                         }
                         console.log(response);
-                        // console.log(response.json());
                         return response.json();
                     })
                     .then(good_response => {
-                        var JSONDataStore = JSON.stringify(good_response, null, 4);
-                        localStorage.setItem("./assets/CurrentLocation.JSON", JSONDataStore);
+                        // var JSONDataStore = JSON.stringify(good_response, null, 4);
+                        // localStorage.setItem("./assets/CurrentLocation.JSON", JSONDataStore);
 
-                        var text = localStorage.getItem("./assets/CurrentLocation.JSON");
-                        var str = JSON.parse(text);
-                        var location = str.data.location;
-                        var city = str.data.city;
+                        // var text = localStorage.getItem("./assets/CurrentLocation.JSON");
+                        // var str = JSON.parse(text);
+                        var location = good_response.data.location;
+                        var city = good_response.data.city;
 
-                        console.log(city);
-                        var array = location.split(",", 2);
+                        console.log(city, location);
+                        var latitude_and_longitude = location.split(",", 2);
 
-                        this.latitude = array[0];
-                        this.longitude = array[1];
+                        this.latitude = latitude_and_longitude[0];
+                        this.longitude = latitude_and_longitude[1];
                         document.getElementById('location-data').innerHTML = city;
                         this.getSpecificWeatherData();
                     })
                     .catch(error => {
-                        document.getElementById('data').innerHTML = `Current Location hasn't worked`;
+                        document.getElementById('data').innerHTML = `Your current location cannot be found`;
                         console.error('There was an error!', error);
                     });
 
