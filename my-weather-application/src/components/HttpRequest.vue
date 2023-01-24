@@ -65,16 +65,16 @@
 
                         // var text = localStorage.getItem("./assets/LocationData.JSON");
                         // var str = JSON.parse(text);
-                        // var location = str.data.timezone.location;
-                        // var city = str.data.timezone.capital;
+                        var location = good_response.data.timezone.location;
+                        var city = good_response.data.timezone.capital;
 
-                        // var array = location.split(",", 2);
+                        console.log(city, location);
+                        var latitude_and_longitude = location.split(",", 2);
 
-                        // this.latitude = array[0];
-                        // this.longitude = array[1];
-                        // document.getElementById('location-data').innerHTML = city;
-                        // this.getSpecificWeatherData();
-                        console.log(good_response);
+                        this.latitude = latitude_and_longitude[0];
+                        this.longitude = latitude_and_longitude[1];
+                        document.getElementById('location-data').innerHTML = city;
+                        this.getSpecificWeatherData();
                     })
                     .catch(error => {
                         document.getElementById('api').innerHTML = `API call Failed.`;
