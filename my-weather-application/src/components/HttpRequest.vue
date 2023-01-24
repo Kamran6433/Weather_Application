@@ -60,11 +60,6 @@
                         return response.json();
                     })
                     .then(good_response => {
-                        // var JSONDataStore = JSON.stringify(good_response, null, 4);
-                        // localStorage.setItem("./assets/LocationData.JSON", JSONDataStore);
-
-                        // var text = localStorage.getItem("./assets/LocationData.JSON");
-                        // var str = JSON.parse(text);
                         var location = good_response.data.timezone.location;
                         var city = good_response.data.timezone.capital;
 
@@ -98,12 +93,6 @@
                         return response.json();
                     })
                     .then(good_response => {
-                        // var JSONDataStore = JSON.stringify(good_response, null, 4);
-                        // localStorage.setItem("./assets/WeatherData.JSON", JSONDataStore);
-
-                        // var text = localStorage.getItem("./assets/WeatherData.JSON");
-                        // var str = JSON.parse(text);
-                        // console.log(str);
                         console.log(good_response);
                         var temperature_2m = good_response['hourly'];
                         document.getElementById('temperature-data').innerHTML = temperature_2m['temperature_2m'];
@@ -132,11 +121,6 @@
                         return response.json();
                     })
                     .then(good_response => {
-                        // var JSONDataStore = JSON.stringify(good_response, null, 4);
-                        // localStorage.setItem("./assets/CurrentLocation.JSON", JSONDataStore);
-
-                        // var text = localStorage.getItem("./assets/CurrentLocation.JSON");
-                        // var str = JSON.parse(text);
                         var location = good_response.data.location;
                         var city = good_response.data.city;
 
@@ -179,7 +163,6 @@ button:hover {
     border-color: crimson;
 }
 .box {
-    /* border: 5px solid #2c3e50; */
     padding: 20px;
     display: inline-block;
     width: 40%;
