@@ -1,32 +1,34 @@
 <template>
-    <div>
-        <div id="map"></div>
-        <div class="box">
-            <label>Latitude: </label>
-            <input v-model="latitude" placeholder="e.g. 54.77"><br/><br/>
-            <label>Longitude: </label>
-            <input v-model="longitude" placeholder="e.g. -1.27"><br/><br/>
-            <button id="submitButton" @click="getSpecificWeatherData"><h2>SUBMIT</h2></button>
-        </div>
-        <br/><br/>
-        <div class="box">
-            <label>Capital City: </label>
-            <input v-model="city" placeholder="e.g. Copenhagen"><br/><br/>
-            <label>Continent: </label>
-            <input v-model="continent" placeholder="e.g. Europe"><br/><br/>
-            <button id="submitButton" @click="getCityWeatherData"><h2>SUBMIT</h2></button>
-        </div>
-        <br/><br/>
-        <button id="currentLocation" @click="getCurrentLocationWeatherData"><h2>Use Current Location</h2></button>
-        <div>
-            <h3>Weather data will be displayed here</h3>
-            <hr/>
-            <p id="api"></p>
-            <p id="data"></p>
-            <h1>Location</h1>
-            <p id="location-data"></p>
-            <h1>Temperature(Celcius)</h1>
-            <p id="temperature-data"></p>
+    <div class="outer-outer-outer-box">
+        <div class="outer-outer-box">
+            <div class="outer-box">
+                <div class="box">
+                    <label>Latitude: </label>
+                    <input v-model="latitude" placeholder="e.g. 54.77"><br/><br/>
+                    <label>Longitude: </label>
+                    <input v-model="longitude" placeholder="e.g. -1.27"><br/><br/>
+                    <button id="submitButton" @click="getSpecificWeatherData('User specified location')"><h2>SUBMIT</h2></button>
+                </div>
+                <br/><br/>
+                <div class="box">
+                    <label>Capital City: </label>
+                    <input v-model="city" placeholder="e.g. Copenhagen"><br/><br/>
+                    <label>Continent: </label>
+                    <input v-model="continent" placeholder="e.g. Europe"><br/><br/>
+                    <button id="submitButton" @click="getCapitalCityWeatherData"><h2>SUBMIT</h2></button>
+                </div>
+                <br/><br/>
+                <button id="currentLocation" @click="getCurrentLocationWeatherData"><h2>Use Current Location</h2></button>
+            </div>
+            <div class="box2">
+                <!-- <h2>Weather data will be displayed here</h2> -->
+                <!-- <p id="data"></p> -->
+                <h2>Location</h2>
+                <p id="location-data"></p>
+                <br/><br/><br/><br/><br/><br/>
+                <h2>Temperature(Celcius)</h2>
+                <span id="temperature-data"></span>
+            </div>
         </div>
     </div>
 </template>
@@ -46,7 +48,36 @@
         },
         methods: {
 
-            getCityWeatherData() {
+            getSpecificWeatherData(city) {
+
+                var latitude = this.latitude;
+                var longitude = this.longitude;
+                var parameters = 'hourly=temperature_2m';
+                var url2 = 'https://api.open-meteo.com/v1/forecast?latitude='+latitude+'&longitude='+longitude+'&'+parameters;
+
+                fetch(url2)
+                    .then(response => {
+                        if (!response.ok) {
+                            return Promise.reject(response.statusText);
+                        }
+                        return response.json();
+                    })
+                    .then(good_response => {
+                        console.log(good_response);
+                        var temperature_2m = good_response['hourly'];
+                        document.getElementById('location-data').innerHTML = city;
+                        // var splitTemperature = temperature_2m['temperature_2m'];
+                        // var finalTemperature = splitTemperature.split(",");
+                        document.getElementById('temperature-data').innerHTML = temperature_2m['temperature_2m'];
+                    })
+                    .catch(error => {
+                        document.getElementById('location-data').innerHTML = `Please enter correct co-ordinates`;
+                        console.error('There was an error!', error);
+                    });
+
+            },
+
+            getCapitalCityWeatherData() {
 
                 var continent = this.continent;
                 var city = this.city;
@@ -68,38 +99,11 @@
 
                         this.latitude = latitude_and_longitude[0];
                         this.longitude = latitude_and_longitude[1];
-                        document.getElementById('location-data').innerHTML = city;
-                        this.getSpecificWeatherData();
+                        this.getSpecificWeatherData(city);
                     })
                     .catch(error => {
-                        document.getElementById('api').innerHTML = `API call Failed.`;
+                        document.getElementById('location-data').innerHTML = `API call Failed. Perhaps you should check your spelling!`;
                         console.error('There was an error in the API call!', error);
-                    });
-
-            },
-
-            getSpecificWeatherData() {
-
-                var latitude = this.latitude;
-                var longitude = this.longitude;
-                var parameters = 'hourly=temperature_2m';
-                var url2 = 'https://api.open-meteo.com/v1/forecast?latitude='+latitude+'&longitude='+longitude+'&'+parameters;
-
-                fetch(url2)
-                    .then(response => {
-                        if (!response.ok) {
-                            return Promise.reject(response.statusText);
-                        }
-                        return response.json();
-                    })
-                    .then(good_response => {
-                        console.log(good_response);
-                        var temperature_2m = good_response['hourly'];
-                        document.getElementById('temperature-data').innerHTML = temperature_2m['temperature_2m'];
-                    })
-                    .catch(error => {
-                        document.getElementById('data').innerHTML = `Please enter correct co-ordinates`;
-                        console.error('There was an error!', error);
                     });
 
             },
@@ -121,6 +125,7 @@
                         return response.json();
                     })
                     .then(good_response => {
+                        console.log(good_response);
                         var location = good_response.data.location;
                         var city = good_response.data.city;
 
@@ -129,11 +134,10 @@
 
                         this.latitude = latitude_and_longitude[0];
                         this.longitude = latitude_and_longitude[1];
-                        document.getElementById('location-data').innerHTML = city;
-                        this.getSpecificWeatherData();
+                        this.getSpecificWeatherData(city);
                     })
                     .catch(error => {
-                        document.getElementById('data').innerHTML = `Your current location cannot be found`;
+                        document.getElementById('location-data').innerHTML = `Your current location cannot be found`;
                         console.error('There was an error!', error);
                     });
 
@@ -155,6 +159,10 @@ button:hover {
     border: 5px solid #42b983;
     background-color: #2c3e50;
 }
+label {
+    font-weight: bold;
+    font-size: larger;
+}
 #currentLocation {
     background-color: crimson;
 }
@@ -165,8 +173,23 @@ button:hover {
 .box {
     padding: 20px;
     display: inline-block;
-    width: 40%;
     background-color: #FAF9F6;
     border-radius: 10px;
+}
+.box2{
+    border: 5px solid red;
+    max-width: 1600px;
+}
+.outer-box {
+    border: 5px solid #42b983;
+    display: inline-block;
+}
+.outer-outer-box {
+    border: 5px solid #2c3e50;
+    display: inline-flex;
+    /* max-width: 1600px; */
+}
+.outer-outer-outer-box {
+    display: inline flex;
 }
 </style>

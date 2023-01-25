@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" class="centering">
         <img alt="Cloud" src="./assets/cloud-png-transparent-11 (1).png" width="750">
         <h1>My Weather Application</h1>
         <WeatherApplication></WeatherApplication>
@@ -29,5 +29,10 @@ export default {
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+}
+.centering {
+    display: flow-root;
+    justify-content: center;
+    align-content: center;
 }
 </style>

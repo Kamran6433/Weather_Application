@@ -32,4 +32,9 @@ li {
 a {
     color: #42b983;
 }
+.centering {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
 </style>
