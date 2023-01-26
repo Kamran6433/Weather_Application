@@ -1,7 +1,7 @@
 <template>
     <div id="app" class="centering">
-        <img alt="Cloud" src="./assets/cloud-png-transparent-11 (1).png" width="750">
-        <h1>My Weather Application</h1>
+        <!-- <img alt="Cloud" src="./assets/cloud-png-transparent-11 (1).png" width="750"> -->
+        <span><h1>My Weather Application</h1></span>
         <WeatherApplication></WeatherApplication>
         <HttpRequest></HttpRequest>
     </div>
@@ -22,17 +22,29 @@ export default {
 </script>
 
 <style>
+html {
+  background-image: url(./assets/taylor-van-riper-yQorCngxzwI-unsplash.jpg);
+  background-position: center;
+}
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
+    color: #FAF9F6;
     margin-top: 60px;
 }
 .centering {
     display: flow-root;
     justify-content: center;
     align-content: center;
+}
+h1 {
+  background-color: #0D9DE3;
+  width: 100%;
+  position: absolute;
+  top: -22px;
+  left: 0;
+  padding: 10px;
 }
 </style>

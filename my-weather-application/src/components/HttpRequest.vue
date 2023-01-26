@@ -173,19 +173,18 @@ label {
 .box {
     padding: 20px;
     display: inline-block;
-    background-color: #FAF9F6;
     border-radius: 10px;
 }
 .box2{
-    border: 5px solid red;
+    /* border: 5px solid red; */
     max-width: 1600px;
 }
 .outer-box {
-    border: 5px solid #42b983;
+    /* border: 5px solid #42b983; */
     display: inline-block;
 }
 .outer-outer-box {
-    border: 5px solid #2c3e50;
+    /* border: 5px solid #2c3e50; */
     display: inline-flex;
     /* max-width: 1600px; */
 }
