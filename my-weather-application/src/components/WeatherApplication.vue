@@ -2,7 +2,7 @@
     <div>
         <p>
             Hello My Name Is Kamran.<br/>
-            This is my Weather Application where users can display the weather in a specified location.<br/>
+            This is my Weather Application built using Vue.JS where users can display the weather in a specified location.<br/>
             You can enter the Longitude and Latitude to get the Weather in that area.<br/>
             Alternatively, you can enter a Capital City along with the corresponding Continent.<br/>
             Or, you can simply press the red button to get the weather in your current location.<br/>

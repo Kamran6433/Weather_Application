@@ -21,13 +21,12 @@
                 <button id="currentLocation" @click="getCurrentLocationWeatherData"><h2>Use Current Location</h2></button>
             </div>
             <div class="box2">
-                <!-- <h2>Weather data will be displayed here</h2> -->
-                <!-- <p id="data"></p> -->
                 <h2>Location</h2>
                 <p id="location-data"></p>
                 <br/><br/><br/><br/><br/><br/>
                 <h2>Temperature(Celcius)</h2>
-                <span id="temperature-data"></span>
+                <ul id="time-data"></ul>
+                <ul id="temperature-data"></ul>
             </div>
         </div>
     </div>
@@ -64,11 +63,14 @@
                     })
                     .then(good_response => {
                         console.log(good_response);
-                        var temperature_2m = good_response['hourly'];
+                        var hourly = good_response['hourly'];
+                        var temperature_2m = hourly['temperature_2m'];
+                        var time = hourly['time'];
+                        var eachTemperature = String(temperature_2m);
+                        var eachTime = String(time);
                         document.getElementById('location-data').innerHTML = city;
-                        // var splitTemperature = temperature_2m['temperature_2m'];
-                        // var finalTemperature = splitTemperature.split(",");
-                        document.getElementById('temperature-data').innerHTML = temperature_2m['temperature_2m'];
+                        document.getElementById('temperature-data').innerHTML = eachTemperature.split(",", 5);
+                        document.getElementById('time-data').innerHTML = eachTime.split(",", 5);
                     })
                     .catch(error => {
                         document.getElementById('location-data').innerHTML = `Please enter correct co-ordinates`;
@@ -176,15 +178,15 @@ label {
     border-radius: 10px;
 }
 .box2{
-    /* border: 5px solid red; */
+    border: 5px solid red;
     max-width: 1600px;
 }
 .outer-box {
-    /* border: 5px solid #42b983; */
+    border: 5px solid #42b983;
     display: inline-block;
 }
 .outer-outer-box {
-    /* border: 5px solid #2c3e50; */
+    border: 5px solid #2c3e50;
     display: inline-flex;
     /* max-width: 1600px; */
 }
