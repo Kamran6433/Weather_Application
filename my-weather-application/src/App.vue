@@ -40,7 +40,7 @@ html {
     align-content: center;
 }
 h1 {
-  background-color: #0D9DE3;
+  background-color: #6592a8;
   width: 100%;
   position: absolute;
   top: -22px;

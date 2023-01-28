@@ -1,5 +1,4 @@
 <template>
-    <div class="outer-outer-outer-box">
         <div class="outer-outer-box">
             <div class="outer-box">
                 <div class="box">
@@ -29,7 +28,6 @@
                 <ul id="temperature-data"></ul>
             </div>
         </div>
-    </div>
 </template>
 
 <script>
@@ -175,22 +173,26 @@ label {
 .box {
     padding: 20px;
     display: inline-block;
-    border-radius: 10px;
 }
 .box2{
-    border: 5px solid red;
-    max-width: 1600px;
+    background-color: #6592a8;
+    border-radius: 30px;
+    opacity: 80%;
+    box-shadow: 0px 10px 8px #888888;
+    
+    /* border: 5px solid red; */
 }
 .outer-box {
-    border: 5px solid #42b983;
+    /* border: 5px solid #42b983; */
     display: inline-block;
+    background-color: #6592a8;
+    border-radius: 30px;
+    opacity: 80%;
+    box-shadow: 0px 10px 8px #888888;
+    padding: 20px;
 }
 .outer-outer-box {
-    border: 5px solid #2c3e50;
-    display: inline-flex;
-    /* max-width: 1600px; */
-}
-.outer-outer-outer-box {
-    display: inline flex;
+    /* border: 5px solid #2c3e50; */
+    /* display: inline-block; */
 }
 </style>
