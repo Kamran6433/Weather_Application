@@ -1,6 +1,8 @@
 <template>
         <div class="outer-outer-box">
-            <div class="outer-box">
+            <button id="currentLocation" @click="getCurrentLocationWeatherData"><h2>Use Current Location</h2></button>
+            <br/><br/>
+            <div class="outer-box"> 
                 <div class="box">
                     <label>Latitude: </label>
                     <input v-model="latitude" placeholder="e.g. 54.77"><br/><br/>
@@ -16,14 +18,11 @@
                     <input v-model="continent" placeholder="e.g. Europe"><br/><br/>
                     <button id="submitButton" @click="getCapitalCityWeatherData"><h2>SUBMIT</h2></button>
                 </div>
-                <br/><br/>
-                <button id="currentLocation" @click="getCurrentLocationWeatherData"><h2>Use Current Location</h2></button>
             </div>
-            <div class="box2">
-                <h2>Location</h2>
-                <p id="location-data"></p>
-                <br/><br/><br/><br/><br/><br/>
-                <h2>Temperature(Celcius)</h2>
+            <br/><br/>
+            <label>Location: </label>
+            <label id="location-data"></label>
+            <div class="card">
                 <ul id="time-data"></ul>
                 <ul id="temperature-data"></ul>
             </div>
@@ -67,8 +66,9 @@
                         var eachTemperature = String(temperature_2m);
                         var eachTime = String(time);
                         document.getElementById('location-data').innerHTML = city;
-                        document.getElementById('temperature-data').innerHTML = eachTemperature.split(",", 5);
-                        document.getElementById('time-data').innerHTML = eachTime.split(",", 5);
+                        document.getElementById('temperature-data').innerHTML = String(eachTemperature).split(/,/, 5);
+                        var eachTimeSplitUp = String(eachTime).split(/,/, 5);
+                        document.getElementById('time-data').innerHTML = eachTimeSplitUp[1];
                     })
                     .catch(error => {
                         document.getElementById('location-data').innerHTML = `Please enter correct co-ordinates`;
@@ -160,8 +160,8 @@ button:hover {
     background-color: #2c3e50;
 }
 label {
-    font-weight: bold;
-    font-size: larger;
+    font-weight: 900;
+    font-size: 2em;
 }
 #currentLocation {
     background-color: crimson;
@@ -170,29 +170,37 @@ label {
     background-color: #2c3e50;
     border-color: crimson;
 }
-.box {
-    padding: 20px;
-    display: inline-block;
+#location-data {
+    color: #6592a8;
+    font-size: 75px;
 }
-.box2{
+ul {
+    font-weight: 900;
+    font-size: 1.5em;
+}
+.box {
+    border: 6px solid #152238;
+    padding: 20px;
+    border-radius: 20px;
+    margin-right: 20px;
+}
+.card{
     background-color: #6592a8;
-    border-radius: 30px;
-    opacity: 80%;
+    border-radius: 20px;
+    padding: 10px;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 20px;
+    margin-bottom: 20px;
     box-shadow: 0px 10px 8px #888888;
-    
-    /* border: 5px solid red; */
 }
 .outer-box {
-    /* border: 5px solid #42b983; */
-    display: inline-block;
-    background-color: #6592a8;
-    border-radius: 30px;
-    opacity: 80%;
-    box-shadow: 0px 10px 8px #888888;
-    padding: 20px;
+    display: inline-flex;
+    flex-direction: row;
 }
 .outer-outer-box {
-    /* border: 5px solid #2c3e50; */
-    /* display: inline-block; */
 }
 </style>
