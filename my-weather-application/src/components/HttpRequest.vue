@@ -18,13 +18,16 @@
                     <input v-model="continent" placeholder="e.g. Europe"><br/><br/>
                     <button id="submitButton" @click="getCapitalCityWeatherData"><h2>SUBMIT</h2></button>
                 </div>
-            </div>
+            </div>ee
             <br/><br/>
             <label>Location: </label>
             <label id="location-data"></label>
-            <div class="card">
-                <ul id="time-data"></ul>
-                <ul id="temperature-data"></ul>
+            <div class="card-container">
+                <div class="card">
+                    <div v-for="(time, temperature) in temperatureAndTime" :key="time" :value="temperature">
+                        {{ time }} : {{ temperature }}
+                    </div>
+                </div>
             </div>
         </div>
 </template>
@@ -38,7 +41,8 @@
                     latitude: '',
                     longitude: '',
                     city: '',
-                    continent: ''
+                    continent: '',
+                    temperatureAndTime: { eachTemperatureSplitUp: '', eachTimeSplitUp: ''}
                 }
             }
         },
@@ -66,9 +70,10 @@
                         var eachTemperature = String(temperature_2m);
                         var eachTime = String(time);
                         document.getElementById('location-data').innerHTML = city;
-                        document.getElementById('temperature-data').innerHTML = String(eachTemperature).split(/,/, 5);
-                        var eachTimeSplitUp = String(eachTime).split(/,/, 5);
-                        document.getElementById('time-data').innerHTML = eachTimeSplitUp[1];
+                        this.eachTemperatureSplitUp = String(eachTemperature).split(/,/, 5);
+                        // document.getElementById('temperature-data').innerHTML = eachTemperatureSplitUp[2];
+                        this.eachTimeSplitUp = String(eachTime).split(/,/, 5);
+                        // document.getElementById('time-data').innerHTML = eachTimeSplitUp[1];
                     })
                     .catch(error => {
                         document.getElementById('location-data').innerHTML = `Please enter correct co-ordinates`;
@@ -183,6 +188,10 @@ ul {
     padding: 20px;
     border-radius: 20px;
     margin-right: 20px;
+}
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
 }
 .card{
     background-color: #6592a8;
