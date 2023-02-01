@@ -38,6 +38,8 @@
 <script>
 import InformationCard from './InformationCard.vue';
 
+let nextCardId = 1
+
 export default {
     name: 'HttpRequest',
     components: {
@@ -51,8 +53,9 @@ export default {
                 city: '',
                 continent: ''
             },
-            temperatureAndTime: { 
-                eachTemperatureSplitUp: '', 
+            temperatureAndTime: {
+                id: nextCardId++,
+                eachTemperatureSplitUp: '',
                 eachTimeSplitUp: ''
             }
         }
@@ -67,30 +70,30 @@ export default {
             var url2 = 'https://api.open-meteo.com/v1/forecast?latitude='+latitude+'&longitude='+longitude+'&'+parameters;
 
             fetch(url2)
-                .then(response => {
-                    if (!response.ok) {
-                        return Promise.reject(response.statusText);
-                    }
-                    return response.json();
-                })
-                .then(good_response => {
-                    console.log(good_response);
-                    var hourly = good_response['hourly'];
-                    var temperature_2m = hourly['temperature_2m'];
-                    var time = hourly['time'];
-                    var eachTemperature = String(temperature_2m);
-                    var eachTime = String(time);
-                    document.getElementById('location-data').innerHTML = city;
-                    this.temperatureAndTime.eachTemperatureSplitUp = String(eachTemperature).split(/,/, 5);
-                    this.temperatureAndTime.eachTimeSplitUp = String(eachTime).split(/,/, 5);
-                    console.log(this.temperatureAndTime.eachTemperatureSplitUp);
-                    console.log(this.temperatureAndTime.eachTimeSplitUp);
-                    console.log(this.temperatureAndTime);
-                })
-                .catch(error => {
-                    document.getElementById('location-data').innerHTML = `Please enter correct co-ordinates`;
-                    console.error('There was an error!', error);
-                });
+            .then(response => {
+                if (!response.ok) {
+                    return Promise.reject(response.statusText);
+                }
+                return response.json();
+            })
+            .then(good_response => {
+                console.log(good_response);
+                var hourly = good_response['hourly'];
+                var temperature_2m = hourly['temperature_2m'];
+                var time = hourly['time'];
+                var eachTemperature = String(temperature_2m);
+                var eachTime = String(time);
+                document.getElementById('location-data').innerHTML = city;
+                this.temperatureAndTime.eachTemperatureSplitUp = String(eachTemperature).split(/,/, 1);
+                this.temperatureAndTime.eachTimeSplitUp = String(eachTime).split(/,/, 1);
+                console.log(this.temperatureAndTime.eachTemperatureSplitUp);
+                console.log(this.temperatureAndTime.eachTimeSplitUp);
+                console.log(this.temperatureAndTime);
+            })
+            .catch(error => {
+                document.getElementById('location-data').innerHTML = `Please enter correct co-ordinates`;
+                console.error('There was an error!', error);
+            });
 
         },
 
@@ -101,27 +104,27 @@ export default {
             var url1 = 'https://timezoneapi.io/api/timezone/?'+continent+'/'+city+'&token=arqTUMsJazDTSojCLmOt';
 
             fetch(url1)
-                .then(response => {
-                    if (!response.ok) {
-                        return Promise.reject(response.statusText);
-                    }
-                    return response.json();
-                })
-                .then(good_response => {
-                    var location = good_response.data.timezone.location;
-                    var city = good_response.data.timezone.capital;
+            .then(response => {
+                if (!response.ok) {
+                    return Promise.reject(response.statusText);
+                }
+                return response.json();
+            })
+            .then(good_response => {
+                var location = good_response.data.timezone.location;
+                var city = good_response.data.timezone.capital;
 
-                    console.log(city, location);
-                    var latitude_and_longitude = location.split(",", 2);
+                console.log(city, location);
+                var latitude_and_longitude = location.split(",", 2);
 
-                    this.latitude = latitude_and_longitude[0];
-                    this.longitude = latitude_and_longitude[1];
-                    this.getSpecificWeatherData(city);
-                })
-                .catch(error => {
-                    document.getElementById('location-data').innerHTML = `API call Failed. Perhaps you should check your spelling!`;
-                    console.error('There was an error in the API call!', error);
-                });
+                this.latitude = latitude_and_longitude[0];
+                this.longitude = latitude_and_longitude[1];
+                this.getSpecificWeatherData(city);
+            })
+            .catch(error => {
+                document.getElementById('location-data').innerHTML = `API call Failed. Perhaps you should check your spelling!`;
+                console.error('There was an error in the API call!', error);
+            });
 
         },
 
@@ -134,29 +137,29 @@ export default {
                     'Content-Type': 'application/json'
                 }
             })
-                .then(response => {
-                    if (!response.ok) {
-                        return Promise.reject(response.statusText);
-                    }
-                    console.log(response);
-                    return response.json();
-                })
-                .then(good_response => {
-                    console.log(good_response);
-                    var location = good_response.data.location;
-                    var city = good_response.data.city;
+            .then(response => {
+                if (!response.ok) {
+                    return Promise.reject(response.statusText);
+                }
+                console.log(response);
+                return response.json();
+            })
+            .then(good_response => {
+                console.log(good_response);
+                var location = good_response.data.location;
+                var city = good_response.data.city;
 
-                    console.log(city, location);
-                    var latitude_and_longitude = location.split(",", 2);
+                console.log(city, location);
+                var latitude_and_longitude = location.split(",", 2);
 
-                    this.latitude = latitude_and_longitude[0];
-                    this.longitude = latitude_and_longitude[1];
-                    this.getSpecificWeatherData(city);
-                })
-                .catch(error => {
-                    document.getElementById('location-data').innerHTML = `Your current location cannot be found`;
-                    console.error('There was an error!', error);
-                });
+                this.latitude = latitude_and_longitude[0];
+                this.longitude = latitude_and_longitude[1];
+                this.getSpecificWeatherData(city);
+            })
+            .catch(error => {
+                document.getElementById('location-data').innerHTML = `Your current location cannot be found`;
+                console.error('There was an error!', error);
+            });
 
         }
 
