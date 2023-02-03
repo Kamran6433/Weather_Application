@@ -8,7 +8,7 @@
                 <input v-model="latitude" placeholder="e.g. 54.77"><br/><br/>
                 <label>Longitude: </label>
                 <input v-model="longitude" placeholder="e.g. -1.27"><br/><br/>
-                <button id="submitButton" @click="getSpecificWeatherData('User specified location')"><h2>SUBMIT</h2></button>
+                <button id="submitButton" @click="getSpecificWeatherDataAndStore('User specified location')"><h2>SUBMIT</h2></button>
             </div>
             <br/><br/>
             <div class="box">
@@ -22,39 +22,35 @@
         <br/><br/>
         <label>Location: </label>
         <label id="location-data"></label>
-        <div v-if="temperatureAndTime.eachTimeSplitUp">
-            <InformationCard 
-                v-for="(time, temperature) in temperatureAndTime"
-                :key="time.temperatureAndTime"
-                :time="time"
-                :temperature="temperature"
-            >
-            </InformationCard>
+        <div v-if="weatherData.eachTimeSplitUp">
+            <div v-for="items in weatherData" :key="items">
+                <div class="card-container">
+                    <div class="card" v-for="item in items" :key="item">
+                        <label>
+                            {{ item }}
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
         <label v-else>No Weather Data</label> 
     </div>
 </template>
 
 <script>
-import InformationCard from './InformationCard.vue';
-
-let nextCardId = 1
+// Make sure to wrap API calls with exception handling to limit/lower my dependency on the API
 
 export default {
     name: 'HttpRequest',
-    components: {
-        InformationCard
-    },
     data() {
         return {
-            data: {
+            locationData: {
                 latitude: '',
                 longitude: '',
                 city: '',
                 continent: ''
             },
-            temperatureAndTime: {
-                id: nextCardId++,
+            weatherData: {
                 eachTemperatureSplitUp: '',
                 eachTimeSplitUp: ''
             }
@@ -62,7 +58,7 @@ export default {
     },
     methods: {
 
-        getSpecificWeatherData(city) {
+        getSpecificWeatherDataAndStore(city) {
 
             var latitude = this.latitude;
             var longitude = this.longitude;
@@ -84,11 +80,15 @@ export default {
                 var eachTemperature = String(temperature_2m);
                 var eachTime = String(time);
                 document.getElementById('location-data').innerHTML = city;
-                this.temperatureAndTime.eachTemperatureSplitUp = String(eachTemperature).split(/,/, 1);
-                this.temperatureAndTime.eachTimeSplitUp = String(eachTime).split(/,/, 1);
-                console.log(this.temperatureAndTime.eachTemperatureSplitUp);
-                console.log(this.temperatureAndTime.eachTimeSplitUp);
-                console.log(this.temperatureAndTime);
+                // Can swap the iteration for a parameter to enable limiting cards
+                this.weatherData.eachTemperatureSplitUp = String(eachTemperature).split(/,/, 5);
+                // var firstHalf, secondHalf = String(eachTime).split(/T + ,/, 5);
+                // this.weatherData.eachTimeSplitUp = secondHalf;
+                // firstHalf
+                this.weatherData.eachTimeSplitUp = String(eachTime).split(/,/, 5);
+                console.log(this.weatherData.eachTemperatureSplitUp);
+                console.log(this.weatherData.eachTimeSplitUp);
+                console.log(this.weatherData);
             })
             .catch(error => {
                 document.getElementById('location-data').innerHTML = `Please enter correct co-ordinates`;
@@ -119,7 +119,7 @@ export default {
 
                 this.latitude = latitude_and_longitude[0];
                 this.longitude = latitude_and_longitude[1];
-                this.getSpecificWeatherData(city);
+                this.getSpecificWeatherDataAndStore(city);
             })
             .catch(error => {
                 document.getElementById('location-data').innerHTML = `API call Failed. Perhaps you should check your spelling!`;
@@ -154,7 +154,7 @@ export default {
 
                 this.latitude = latitude_and_longitude[0];
                 this.longitude = latitude_and_longitude[1];
-                this.getSpecificWeatherData(city);
+                this.getSpecificWeatherDataAndStore(city);
             })
             .catch(error => {
                 document.getElementById('location-data').innerHTML = `Your current location cannot be found`;
@@ -207,6 +207,23 @@ ul {
 .outer-box {
     display: inline-flex;
     flex-direction: row;
+}
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.card{
+    background-color: #6592a8;
+    border-radius: 20px;
+    padding: 10px;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0px 10px 8px #888888;
 }
 /* .outer-outer-box {
 } */
