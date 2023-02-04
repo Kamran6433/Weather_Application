@@ -82,9 +82,6 @@ export default {
                 document.getElementById('location-data').innerHTML = city;
                 // Can swap the iteration for a parameter to enable limiting cards
                 this.weatherData.eachTemperatureSplitUp = String(eachTemperature).split(/,/, 5);
-                // var firstHalf, secondHalf = String(eachTime).split(/T + ,/, 5);
-                // this.weatherData.eachTimeSplitUp = secondHalf;
-                // firstHalf
                 this.weatherData.eachTimeSplitUp = String(eachTime).split(/,/, 5);
                 console.log(this.weatherData.eachTemperatureSplitUp);
                 console.log(this.weatherData.eachTimeSplitUp);
