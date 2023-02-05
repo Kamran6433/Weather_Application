@@ -44,12 +44,10 @@ export default {
     name: 'HttpRequest',
     data() {
         return {
-            locationData: {
-                latitude: '',
-                longitude: '',
-                city: '',
-                continent: ''
-            },
+            latitude: '',
+            longitude: '',
+            city: '',
+            continent: '',
             weatherData: {
                 eachTemperatureSplitUp: '',
                 eachTimeSplitUp: ''
@@ -70,15 +68,17 @@ export default {
                 if (!response.ok) {
                     return Promise.reject(response.statusText);
                 }
-                return response.json();
-            })
-            .then(good_response => {
+
+                const good_response = response.json();
+
                 console.log(good_response);
                 var hourly = good_response['hourly'];
                 var temperature_2m = hourly['temperature_2m'];
                 var time = hourly['time'];
                 var eachTemperature = String(temperature_2m);
                 var eachTime = String(time);
+                // This should not happen
+                // save it in data and data is reactive so link data to template
                 document.getElementById('location-data').innerHTML = city;
                 // Can swap the iteration for a parameter to enable limiting cards
                 this.weatherData.eachTemperatureSplitUp = String(eachTemperature).split(/,/, 5);
@@ -105,14 +105,14 @@ export default {
                 if (!response.ok) {
                     return Promise.reject(response.statusText);
                 }
-                return response.json();
-            })
-            .then(good_response => {
-                var location = good_response.data.timezone.location;
-                var city = good_response.data.timezone.capital;
+
+                const good_response = response.json();
+
+                let location = good_response.data.timezone.location;
+                let city = good_response.data.timezone.capital;
 
                 console.log(city, location);
-                var latitude_and_longitude = location.split(",", 2);
+                let latitude_and_longitude = location.split(",", 2);
 
                 this.latitude = latitude_and_longitude[0];
                 this.longitude = latitude_and_longitude[1];
@@ -138,10 +138,9 @@ export default {
                 if (!response.ok) {
                     return Promise.reject(response.statusText);
                 }
-                console.log(response);
-                return response.json();
-            })
-            .then(good_response => {
+
+                const good_response = response.json();  
+
                 console.log(good_response);
                 var location = good_response.data.location;
                 var city = good_response.data.city;
