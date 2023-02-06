@@ -68,9 +68,10 @@ export default {
                 if (!response.ok) {
                     return Promise.reject(response.statusText);
                 }
-
-                const good_response = response.json();
-
+            
+                return response.json();
+            })
+            .then(good_response => {
                 console.log(good_response);
                 var hourly = good_response['hourly'];
                 var temperature_2m = hourly['temperature_2m'];
@@ -106,7 +107,9 @@ export default {
                     return Promise.reject(response.statusText);
                 }
 
-                const good_response = response.json();
+                return response.json();
+            })
+            .then(good_response => {
 
                 let location = good_response.data.timezone.location;
                 let city = good_response.data.timezone.capital;
@@ -139,8 +142,9 @@ export default {
                     return Promise.reject(response.statusText);
                 }
 
-                const good_response = response.json();  
-
+                return response.json();  
+            })
+            .then(good_response => {
                 console.log(good_response);
                 var location = good_response.data.location;
                 var city = good_response.data.city;
