@@ -23,7 +23,7 @@
         <label>Location: </label>
         <label id="location-data"></label>
         <div v-if="weatherData.eachTimeSplitUp">
-            <div v-for="items in weatherData" :key="items">
+            <div v-for="(items, index) in weatherData" :key="index">
                 <div class="card-container">
                     <div class="card" v-for="item in items" :key="item">
                         <label>
@@ -55,29 +55,39 @@ export default {
         }
     },
     methods: {
+        
+        getLocationAndCityFromDataAndStore(good_response) {
+            let location = good_response.data.timezone.location;
+            let city = good_response.data.timezone.capital;
+
+            console.log(city, location);
+            let latitudeAndLongitude = location.split(",", 2);
+
+            this.latitude = latitudeAndLongitude[0];
+            this.longitude = latitudeAndLongitude[1];
+            this.getSpecificWeatherDataAndStore(city);
+        },
 
         getSpecificWeatherDataAndStore(city) {
-
-            var latitude = this.latitude;
-            var longitude = this.longitude;
-            var parameters = 'hourly=temperature_2m';
-            var url2 = 'https://api.open-meteo.com/v1/forecast?latitude='+latitude+'&longitude='+longitude+'&'+parameters;
+            let latitude = this.latitude;
+            let longitude = this.longitude;
+            let parameters = 'hourly=temperature_2m';
+            let url2 = 'https://api.open-meteo.com/v1/forecast?latitude='+latitude+'&longitude='+longitude+'&'+parameters;
 
             fetch(url2)
             .then(response => {
                 if (!response.ok) {
                     return Promise.reject(response.statusText);
                 }
-            
                 return response.json();
             })
             .then(good_response => {
                 console.log(good_response);
-                var hourly = good_response['hourly'];
-                var temperature_2m = hourly['temperature_2m'];
-                var time = hourly['time'];
-                var eachTemperature = String(temperature_2m);
-                var eachTime = String(time);
+                let hourly = good_response['hourly'];
+                let temperature = hourly['temperature_2m'];
+                let time = hourly['time'];
+                let eachTemperature = String(temperature);
+                let eachTime = String(time);
                 // This should not happen
                 // save it in data and data is reactive so link data to template
                 document.getElementById('location-data').innerHTML = city;
@@ -92,45 +102,31 @@ export default {
                 document.getElementById('location-data').innerHTML = `Please enter correct co-ordinates`;
                 console.error('There was an error!', error);
             });
-
         },
 
         getCapitalCityWeatherData() {
-
-            var continent = this.continent;
-            var city = this.city;
-            var url1 = 'https://timezoneapi.io/api/timezone/?'+continent+'/'+city+'&token=arqTUMsJazDTSojCLmOt';
+            let continent = this.continent;
+            let city = this.city;
+            let url1 = 'https://timezoneapi.io/api/timezone/?'+continent+'/'+city+'&token=arqTUMsJazDTSojCLmOt';
 
             fetch(url1)
             .then(response => {
                 if (!response.ok) {
                     return Promise.reject(response.statusText);
                 }
-
                 return response.json();
             })
             .then(good_response => {
-
-                let location = good_response.data.timezone.location;
-                let city = good_response.data.timezone.capital;
-
-                console.log(city, location);
-                let latitude_and_longitude = location.split(",", 2);
-
-                this.latitude = latitude_and_longitude[0];
-                this.longitude = latitude_and_longitude[1];
-                this.getSpecificWeatherDataAndStore(city);
+                this.getLocationAndCityFromDataAndStore(good_response);
             })
             .catch(error => {
                 document.getElementById('location-data').innerHTML = `API call Failed. Perhaps you should check your spelling!`;
                 console.error('There was an error in the API call!', error);
             });
-
         },
 
         getCurrentLocationWeatherData() {
-
-            var url3 = 'https://timezoneapi.io/api/ip/?token=arqTUMsJazDTSojCLmOt';
+            let url3 = 'https://timezoneapi.io/api/ip/?token=arqTUMsJazDTSojCLmOt';
 
             fetch(url3, {
                 headers: {
@@ -141,28 +137,16 @@ export default {
                 if (!response.ok) {
                     return Promise.reject(response.statusText);
                 }
-
                 return response.json();  
             })
             .then(good_response => {
-                console.log(good_response);
-                var location = good_response.data.location;
-                var city = good_response.data.city;
-
-                console.log(city, location);
-                var latitude_and_longitude = location.split(",", 2);
-
-                this.latitude = latitude_and_longitude[0];
-                this.longitude = latitude_and_longitude[1];
-                this.getSpecificWeatherDataAndStore(city);
+                this.getLocationAndCityFromDataAndStore(good_response);
             })
             .catch(error => {
                 document.getElementById('location-data').innerHTML = `Your current location cannot be found`;
                 console.error('There was an error!', error);
             });
-
         }
-
     }
 };
 </script>
