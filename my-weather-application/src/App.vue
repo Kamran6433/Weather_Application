@@ -1,5 +1,6 @@
 <template>
     <div id="app" class="centering">
+      <NavBar></NavBar>
       <header>
         <h1>Weather</h1>
       </header>
@@ -9,11 +10,13 @@
 
 <script>
 import HttpRequest from './components/HttpRequest.vue';
+import NavBar from './components/NavBar.vue';
 
 export default {
     name: 'App',
     components: {
-      HttpRequest
+      HttpRequest,
+      NavBar
     }
 }
 

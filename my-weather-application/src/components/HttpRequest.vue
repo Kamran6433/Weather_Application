@@ -33,13 +33,11 @@
                 </div>
             </div>
             <div>
-                <div class="card-container" v-for="items in weatherData2" :key="items">
-                    <div class="card-container card" v-for="item in items" :key="item">
-                        <label>
-                            {{ items }}
-                        </label>
-                    </div>
-                </div>
+                <div class="card" v-for="(value, name) in weatherData2" :key="name">
+                    <label>
+                    {{ name }} {{ value }}
+                    </label>
+            </div>
             </div>
         </div>
         <label v-else>No Weather Data</label> 
