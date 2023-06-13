@@ -23,11 +23,20 @@
         <label>Location: </label>
         <label id="location-data"></label>
         <div v-if="weatherData.eachTimeSplitUp">
-            <div v-for="(items, index) in weatherData" :key="index">
-                <div class="card-container">
+            <div>
+                <div class="card-container" v-for="items in weatherData" :key="items">
                     <div class="card" v-for="item in items" :key="item">
                         <label>
                             {{ item }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="card-container" v-for="items in weatherData2" :key="items">
+                    <div class="card-container card" v-for="item in items" :key="item">
+                        <label>
+                            {{ items }}
                         </label>
                     </div>
                 </div>
@@ -48,9 +57,15 @@ export default {
             longitude: '',
             city: '',
             continent: '',
+            hourly: '',
+            eachTemperature: '',
+            eachTime: '',
             weatherData: {
                 eachTemperatureSplitUp: '',
                 eachTimeSplitUp: ''
+            },
+            weatherData2: {
+
             }
         }
     },
@@ -60,7 +75,7 @@ export default {
             let location = good_response.data.timezone.location;
             let city = good_response.data.timezone.capital;
 
-            console.log(city, location);
+            // console.log(city, location);
             let latitudeAndLongitude = location.split(",", 2);
 
             this.latitude = latitudeAndLongitude[0];
@@ -82,21 +97,31 @@ export default {
                 return response.json();
             })
             .then(good_response => {
-                console.log(good_response);
-                let hourly = good_response['hourly'];
-                let temperature = hourly['temperature_2m'];
-                let time = hourly['time'];
-                let eachTemperature = String(temperature);
-                let eachTime = String(time);
+                // console.log(good_response);
+                this.hourly = good_response['hourly'];
+                this.eachTemperature = this.hourly['temperature_2m'];
+                this.eachTime = this.hourly['time'];
                 // This should not happen
-                // save it in data and data is reactive so link data to template
+                // TODO: save it in data and data is reactive so link data to template
                 document.getElementById('location-data').innerHTML = city;
                 // Can swap the iteration for a parameter to enable limiting cards
-                this.weatherData.eachTemperatureSplitUp = String(eachTemperature).split(/,/, 5);
-                this.weatherData.eachTimeSplitUp = String(eachTime).split(/,/, 5);
-                console.log(this.weatherData.eachTemperatureSplitUp);
-                console.log(this.weatherData.eachTimeSplitUp);
-                console.log(this.weatherData);
+                this.weatherData.eachTemperatureSplitUp = String(this.eachTemperature).split(/,/, 5);
+                this.weatherData.eachTimeSplitUp = String(this.eachTime).split(/,/, 5);
+                let eachTemperatureSplitUp1 = String(this.eachTemperature).split(/,/, 5);
+                let eachTimeSplitUp1 = String(this.eachTime).split(/,/, 5);
+                // var dictionary = {
+                //     eachTemperatureSplitUp1,
+                //     eachTimeSplitUp1
+                // }
+                for (let index = 0; index < eachTemperatureSplitUp1.length; index++) {
+                    this.weatherData2 = {
+                        eachTemperatureSplitUp1, eachTimeSplitUp1
+                    };
+                }
+                console.log(this.weatherData2);
+                // console.log(this.weatherData.eachTemperatureSplitUp);
+                // console.log(this.weatherData.eachTimeSplitUp);
+                // console.log(this.weatherData);
             })
             .catch(error => {
                 document.getElementById('location-data').innerHTML = `Please enter correct co-ordinates`;
