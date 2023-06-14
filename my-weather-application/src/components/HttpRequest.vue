@@ -20,24 +20,15 @@
             </div>
         </div>
         <br/><br/>
-        <label>Location: </label>
         <label id="location-data"></label>
-        <div v-if="weatherData.eachTimeSplitUp">
-            <div>
-                <div class="card-container" v-for="items in weatherData" :key="items">
-                    <div class="card" v-for="item in items" :key="item">
-                        <label>
-                            {{ item }}
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="card" v-for="(value, name) in weatherData2" :key="name">
+        <!-- <div v-if="weatherData.length > 1"> -->
+        <div v-if="eachTime">    
+            <div class="card-container">
+                <div class="card" v-for="(time, temperature) in weatherData" :key="temperature">
                     <label>
-                    {{ name }} {{ value }}
+                    {{ temperature }} <br/> {{ time }}
                     </label>
-            </div>
+                </div>
             </div>
         </div>
         <label v-else>No Weather Data</label> 
@@ -59,11 +50,7 @@ export default {
             eachTemperature: '',
             eachTime: '',
             weatherData: {
-                eachTemperatureSplitUp: '',
-                eachTimeSplitUp: ''
-            },
-            weatherData2: {
-
+                '': '',
             }
         }
     },
@@ -95,7 +82,6 @@ export default {
                 return response.json();
             })
             .then(good_response => {
-                // console.log(good_response);
                 this.hourly = good_response['hourly'];
                 this.eachTemperature = this.hourly['temperature_2m'];
                 this.eachTime = this.hourly['time'];
@@ -103,23 +89,17 @@ export default {
                 // TODO: save it in data and data is reactive so link data to template
                 document.getElementById('location-data').innerHTML = city;
                 // Can swap the iteration for a parameter to enable limiting cards
-                this.weatherData.eachTemperatureSplitUp = String(this.eachTemperature).split(/,/, 5);
-                this.weatherData.eachTimeSplitUp = String(this.eachTime).split(/,/, 5);
-                let eachTemperatureSplitUp1 = String(this.eachTemperature).split(/,/, 5);
-                let eachTimeSplitUp1 = String(this.eachTime).split(/,/, 5);
-                // var dictionary = {
-                //     eachTemperatureSplitUp1,
-                //     eachTimeSplitUp1
-                // }
-                for (let index = 0; index < eachTemperatureSplitUp1.length; index++) {
-                    this.weatherData2 = {
-                        eachTemperatureSplitUp1, eachTimeSplitUp1
-                    };
+                let eachTemperatureSplitUp = String(this.eachTemperature).split(/[\s,]+/, 5);
+                let eachTimeSplitUp = String(this.eachTime).split(/[\s,]+/, 5);
+                const dictionary = {}
+                var timeOnly;
+                for (let index = 0; index < eachTimeSplitUp.length; index++) {
+                    timeOnly = eachTimeSplitUp[index].slice(Math.max(eachTimeSplitUp[index].length - 5, 1));
+                    console.log(timeOnly);
+                    dictionary[eachTemperatureSplitUp[index]] = timeOnly;
                 }
-                console.log(this.weatherData2);
-                // console.log(this.weatherData.eachTemperatureSplitUp);
-                // console.log(this.weatherData.eachTimeSplitUp);
-                // console.log(this.weatherData);
+                this.weatherData = dictionary;
+                console.log(this.weatherData);
             })
             .catch(error => {
                 document.getElementById('location-data').innerHTML = `Please enter correct co-ordinates`;
@@ -169,6 +149,26 @@ export default {
                 document.getElementById('location-data').innerHTML = `Your current location cannot be found`;
                 console.error('There was an error!', error);
             });
+        },
+
+        // lifecycle hooks
+        beforeCreate() {
+            alert('beforeCreate');
+        },
+        created() {
+            alert('created');
+        },
+        beforeMount() {
+            alert('beforeMount');
+        },
+        mounted() {
+            alert('mounted');
+        },
+        beforeUpdate() {
+            alert('beforeUpdate');
+        },
+        updated() {
+            alert('updated');
         }
     }
 };
@@ -223,8 +223,8 @@ ul {
     background-color: #6592a8;
     border-radius: 20px;
     padding: 10px;
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
