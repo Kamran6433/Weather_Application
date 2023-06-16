@@ -1,21 +1,22 @@
 <template>
     <div id="app" class="centering bg-light">
       <NavBar></NavBar>
-      <header>
-        <h1>Weather</h1>
-      </header>
-      <HttpRequest></HttpRequest>
+      <router-view></router-view>
     </div>
 </template>
 
 <script>
-import HttpRequest from './components/HttpRequest.vue';
+// import HomePage from './components/HomePage.vue';
+// import AboutPage from './components/AboutPage.vue';
+// import ContactPage from './components/ContactPage.vue';
 import NavBar from './components/NavBar.vue';
 
 export default {
     name: 'App',
     components: {
-      HttpRequest,
+      // HomePage,
+      // AboutPage,
+      // ContactPage,
       NavBar
     }
 }

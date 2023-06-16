@@ -7,16 +7,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Home</a>
+                        <router-link to="/" class="nav-link text-white">Home</router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">About</a>
+                        <router-link to="/about" class="nav-link text-white">About</router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Contact</a>
+                        <router-link to="/contact" class="nav-link text-white">Contact</router-link>
                     </li>
                 </ul>
             </div>
