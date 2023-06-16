@@ -21,10 +21,9 @@
         </div>
         <br/><br/>
         <label id="location-data"></label>
-        <!-- <div v-if="weatherData.length > 1"> -->
         <div v-if="eachTime">    
             <div class="card-container">
-                <div class="card" v-for="(time, temperature) in weatherData" :key="temperature">
+                <div class="card" v-for="(time, temperature) in weatherData" :key="temperature" v-rainbow>
                     <label>
                     {{ temperature }} <br/> {{ time }}
                     </label>
@@ -175,16 +174,30 @@ export default {
 </script>
 
 <style scoped>
+.outer-outer-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
 button {
-    border-radius: 20px;
-    border: 5px solid #2c3e50;
+    border-radius: 15px;
+    /* border: 5px solid #2c3e50;
     background-color: #42b983;
-    color: white;
+    color: white; */
+    background-color: #2196f3;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 button:hover {
-    transition-duration: 200ms;
-    border: 5px solid #42b983;
-    background-color: #2c3e50;
+    /* transition-duration: 200ms;
+    border: 5px solid #42b983; */
+    background-color: #0c7cd5;
 }
 label {
     font-weight: 900;
@@ -206,32 +219,43 @@ ul {
     font-size: 1.5em;
 }
 .box {
-    border: 6px solid #152238;
+    border: 4px solid #152238;
     padding: 20px;
     border-radius: 20px;
     margin-right: 20px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
 }
 .outer-box {
-    display: inline-flex;
-    flex-direction: row;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .card-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
 }
 .card{
     background-color: #6592a8;
-    border-radius: 20px;
-    padding: 10px;
+    color: white;
+    border: 4px solid #152238;
+    border-radius: 15px;
+    padding: 20px;
     width: 200px;
     height: 200px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-right: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0px 10px 8px #888888;
+    margin: 10px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
 }
-/* .outer-outer-box {
+/* label {
 } */
+input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class="centering">
+    <div id="app" class="centering bg-light">
       <NavBar></NavBar>
       <header>
         <h1>Weather</h1>
@@ -41,5 +41,6 @@ header {
 h1 {
   font-weight: 900;
   font-size: 75px;
+  margin-left: 5%;
 }
 </style>
