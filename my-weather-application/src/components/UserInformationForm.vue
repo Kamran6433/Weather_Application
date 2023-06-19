@@ -6,7 +6,7 @@
             <input v-model="userName" placeholder="John">
             <h3>Email: </h3>
             <input v-model="userEmail" placeholder="John@mail.com">
-            <button><h3>Submit</h3></button>
+            <button v-on:click="changeUserInformation"><h3>Submit</h3></button>
         </div>
     </div>
 </template>
