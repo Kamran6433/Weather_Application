@@ -1,6 +1,9 @@
 <template>
     <div id="app" class="centering bg-light">
-      <NavBar></NavBar>
+      <nav-bar></nav-bar>
+      <div id="form">
+        <user-information-form v-if="!userInformation.userName" v-bind:user-information="userInformation"></user-information-form>
+      </div>
       <router-view></router-view>
     </div>
 </template>
@@ -10,6 +13,7 @@
 // import AboutPage from './components/AboutPage.vue';
 // import ContactPage from './components/ContactPage.vue';
 import NavBar from './components/NavBar.vue';
+import userInformationForm from './components/UserInformationForm.vue';
 
 export default {
     name: 'App',
@@ -17,7 +21,20 @@ export default {
       // HomePage,
       // AboutPage,
       // ContactPage,
-      NavBar
+      NavBar,
+      userInformationForm
+    },
+    // props: {
+    //   userName: '',
+    //   userEmail: ''
+    // },
+    data() {
+      return {
+        userInformation: {
+          userName: '',
+          userEmail: ''
+        }
+      }
     }
 }
 
@@ -43,5 +60,13 @@ h1 {
   font-weight: 900;
   font-size: 75px;
   margin-left: 5%;
+}
+#form {
+  z-index: 1;
+  position: fixed;
+  width: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
