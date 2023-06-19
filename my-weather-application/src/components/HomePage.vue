@@ -180,6 +180,7 @@ export default {
     justify-content: center;
     font-family: Arial, sans-serif;
     padding: 20px;
+    background-color: #ecc2ec;
 }
 button {
     border-radius: 15px;

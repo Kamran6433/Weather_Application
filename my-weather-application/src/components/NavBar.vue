@@ -60,5 +60,6 @@ ul {
 .text {
     color: #AA5AAA;
     text-decoration: none;
+    letter-spacing: 2px;
 }
 </style>

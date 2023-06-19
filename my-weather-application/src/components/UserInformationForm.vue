@@ -44,11 +44,14 @@ export default {
 <style scoped>
 .outer-form {
     font-family: Avenir, Helvetica, Arial, sans-serif;
+    display: block;
+    justify-content: center;
+    align-items: center;
     text-align: center;
 }
 span {
     color: #AA5AAA;
-    font-size: 80px;
+    font-size: 110px;
     font-family: Jaldi, Avenir, Helvetica, Arial, sans-serif;
 }
 .form {
@@ -57,18 +60,19 @@ span {
 }
 .form input {
     width: 100%;
-    border: 2px solid #AA5AAA;
+    border: 4px solid #AA5AAA;
     margin: auto;
     border-radius: 15px;
     padding: 10px;
     font-size: 25px;
-    box-shadow: inset 0 1px 10px rgba(0, 0, 0, 0.075);
-    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: inset 0 1px 15px rgba(0, 0, 0, 0.075);
+    transition: border-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
 }
-.form input:focus {
+.form input:hover {
   border-color: #ffaf46;
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(170, 90, 170, 0.25);
+  transition: border-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
 }
 .form-group {
     margin-bottom: 15px;
@@ -90,8 +94,9 @@ span {
     background-color: #ffaf46;
 }
 h1 {
-    font-size: 60px;
+    font-size: 80px;
     color: black;
+    font-weight: 600;
 }
 #signUp {
     font-size: 30px;
