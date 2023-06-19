@@ -1,16 +1,30 @@
 <template>
-    <div id="app" class="centering bg-light">
+    <div id="app" class="centering">
       <nav-bar></nav-bar>
-      <div id="form" v-if="!userInformation.userName">
-        <!-- You need to listen for the event that you emmitted in the child componenet and also catch the data through ¢event -->
-        <user-information-form v-bind:user-information="userInformation" v-on:changeUserInformationDataEmitted="updateUserInformation($event)"></user-information-form>
-        <!-- You can call the component two ways: kebab-case or camelCase -->
-        <!-- <userInformationForm v-bind:user-information="userInformation" v-on:changeUserInformationDataEmitted="updateUserInformation($event)"></userInformationForm> -->
-      </div>
-      <div v-else>
-        <h1>{{ userInformation.userName }} {{ userInformation.userEmail }}</h1>
-      </div>
-      <router-view></router-view>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <section>
+        <div id="form" v-if="!userInformation.userName">
+          <!-- You need to listen for the event that you emmitted in the child componenet and also catch the data through ¢event -->
+          <user-information-form v-bind:user-information="userInformation" v-on:changeUserInformationDataEmitted="updateUserInformation($event)"></user-information-form>
+          <!-- You can call the component two ways: kebab-case or camelCase -->
+          <!-- <userInformationForm v-bind:user-information="userInformation" v-on:changeUserInformationDataEmitted="updateUserInformation($event)"></userInformationForm> -->
+        </div>
+        <div v-else>
+          <h1>Welcome: {{ userInformation.userName }} {{ userInformation.userEmail }}</h1>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <router-view></router-view>
+      </section>
     </div>
 </template>
 
@@ -54,7 +68,7 @@ export default {
 
 <style>
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+    /* font-family: Avenir, Helvetica, Arial, sans-serif; */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #152238;
@@ -64,21 +78,17 @@ export default {
 .centering {
     max-width: 1200px;
 }
-header {
+/* header {
   display: flex;
   justify-content: space-between;
-}
+} */
 h1 {
   font-weight: 900;
   font-size: 75px;
   margin-left: 5%;
 }
 #form {
-  z-index: 1;
-  position: fixed;
-  width: 500px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  /* top: 50px;
+  width: 100%; */
 }
 </style>
