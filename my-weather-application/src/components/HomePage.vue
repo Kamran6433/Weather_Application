@@ -181,6 +181,8 @@ export default {
     font-family: Arial, sans-serif;
     padding: 20px;
     background-color: #ecc2ec;
+    box-shadow: 0 1px 10px #c2aac2;
+    border-radius: 15px;
 }
 button {
     border-radius: 15px;

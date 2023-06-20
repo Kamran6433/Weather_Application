@@ -48,6 +48,10 @@ export default {
     justify-content: center;
     align-items: center;
     text-align: center;
+    background-color: white;
+    box-shadow: 0 1px 10px #d8d7d7;
+    border-radius: 15px;
+    padding: 50px;
 }
 span {
     color: #AA5AAA;
@@ -56,7 +60,7 @@ span {
 }
 .form {
     display: inline-flex; 
-    margin: 20px;
+    margin: 10px;
 }
 .form input {
     width: 100%;
@@ -75,7 +79,7 @@ span {
   transition: border-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
 }
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 30px;
     margin-left: 50px;
     margin-right: 50px;
 }
